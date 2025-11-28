@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
 // Estilos globales
@@ -28,17 +28,62 @@ function App() {
     // Simular carga de datos iniciales
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
 
   if (isLoading) {
     return (
-      <div className="loading-screen">
-        <div className="spinner"></div>
-        <h2>Cargando Pan Rock...</h2>
-      </div>
+      <motion.div 
+        className="loading-screen"
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="loading-content">
+          <motion.div
+            className="logo-container"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <img 
+              src="/images/logo.svg" 
+              alt="Pan y Carne Ahumada" 
+              className="loading-logo"
+            />
+          </motion.div>
+          
+          <div className="spinner-container">
+            <div className="spinner">
+              <div className="spinner-ring"></div>
+              <div className="spinner-ring"></div>
+              <div className="spinner-ring"></div>
+            </div>
+          </div>
+          
+          <motion.h2 
+            className="loading-text"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            Cargando Pan Rock...
+          </motion.h2>
+          
+          <motion.div 
+            className="loading-dots"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </motion.div>
+        </div>
+      </motion.div>
     );
   }
 
