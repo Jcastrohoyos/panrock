@@ -4,14 +4,14 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: #000000;
   transition: all 0.3s ease;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   border-bottom: 2px solid var(--secondary-color);
 }
 
 .header.scrolled {
-  background-color: rgba(0, 0, 0, 0.98);
+  background-color: #000000;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   padding: 0.5rem 0;
 }
