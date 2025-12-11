@@ -1,0 +1,5 @@
+/* /index.html 200
+
+# Redirigir todas las rutas a index.html
+# para manejar el enrutamiento del lado del cliente
+/*    /index.html   200
