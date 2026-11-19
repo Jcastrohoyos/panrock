@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FaFire, FaLeaf, FaStar, FaTimes } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaStar, FaTimes } from 'react-icons/fa';
 import { menuItems } from '../../data/menuItems';
 import type { MenuItem } from '../../data/menuItems';
 import styles from './Menu.module.css';
@@ -41,11 +42,11 @@ const Menu: React.FC = () => {
       <div className={styles.hero}>
         <div className={styles.heroContent}>
           <h1>Nuestro Menú</h1>
-          <p>Descubre nuestros exquisitos platillos preparados con los mejores ingredientes</p>
+          <p>Especialidades de lomo de cerdo ahumado, preparadas con sabor auténtico.</p>
           <div className={styles.searchContainer}>
             <input
               type="text"
-              placeholder="Buscar platillos o bebidas..."
+              placeholder="Buscar en el menú..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className={styles.searchInput}
@@ -69,50 +70,73 @@ const Menu: React.FC = () => {
 
       {/* Contenido del Menú */}
       <div className={styles.menuContent}>
-        {Object.entries(itemsByCategory).map(([category, items]) => (
-          <section key={category} className={styles.menuSection}>
-            <h2 className={styles.sectionTitle} id={category.replace(/\s+/g, '-').toLowerCase()}>
-              {category}
-            </h2>
-            <div className={styles.menuItems}>
-              {items.map((item) => (
-                <div 
-                  key={item.id} 
+        {Object.keys(itemsByCategory).length > 0 && (
+          <motion.div
+            className={styles.menuItems}
+            layout
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, y: 28, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 14, scale: 0.96 }}
+                  transition={{ duration: 0.45, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -8 }}
                   className={`${styles.menuItem} ${item.popular ? styles.popular : ''}`}
                   onClick={() => handleItemClick(item)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      handleItemClick(item);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Ver detalles de ${item.name}`}
                 >
                   <div className={styles.itemImage} style={{ backgroundImage: `url(${item.image})` }}>
                     {item.popular && <span className={styles.popularBadge}><FaStar /> Popular</span>}
-                    <div className={styles.itemOverlay}>
-                      <span>Ver detalles</span>
-                    </div>
+                    <div className={styles.itemOverlay}><span>Ver detalles</span></div>
                   </div>
                   <div className={styles.itemContent}>
                     <div className={styles.itemHeader}>
                       <h3>{item.name}</h3>
-                      <span className={styles.price}>${item.price.toFixed(2)}</span>
+                      <span className={styles.price}>{item.price > 0 ? `$${item.price.toFixed(2)}` : 'Consultar'}</span>
                     </div>
-                    <p>{item.description.substring(0, 80)}...</p>
-                    <div className={styles.itemTags}>
-                      {item.spicy && <span className={styles.tag}><FaFire /> Picante</span>}
-                      {item.vegetarian && <span className={styles.tag}><FaLeaf /> Vegetariano</span>}
-                    </div>
+                    <p>{item.description}</p>
                     <div className={styles.smokePreview}>
                       <span>⏱️ {item.smokeTime}</span>
                       <span>🪵 {item.woodType}</span>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </section>
-        ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
       </div>
 
       {/* Modal de Detalles */}
+      <AnimatePresence>
       {isModalOpen && selectedItem && (
-        <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+        <motion.div
+          className={styles.modalOverlay}
+          onClick={() => setIsModalOpen(false)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className={styles.modalContent}
+            onClick={(event) => event.stopPropagation()}
+            initial={{ opacity: 0, y: 28, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 18, scale: 0.97 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          >
             <button className={styles.closeButton} onClick={() => setIsModalOpen(false)}>
               <FaTimes />
             </button>
@@ -136,22 +160,23 @@ const Menu: React.FC = () => {
               </div>
               
               <div className={styles.modalFooter}>
-                <span className={styles.modalPrice}>${selectedItem.price.toFixed(2)}</span>
+                <span className={styles.modalPrice}>{selectedItem.price > 0 ? `$${selectedItem.price.toFixed(2)}` : 'Consultar precio'}</span>
                 <button 
                   className={styles.orderButton}
                   onClick={() => {
-                    // Aquí puedes agregar la lógica para agregar al carrito
-                    alert(`¡${selectedItem.name} agregado al carrito!`);
+                    const message = `Hola, quiero consultar información sobre ${selectedItem.name}.`;
+                    window.open(`https://wa.me/1234567890?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
                     setIsModalOpen(false);
                   }}
                 >
-                  Agregar al carrito
+                  Consultar por WhatsApp
                 </button>
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import styles from './Footer.module.css';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const mapEmbedUrl = process.env.REACT_APP_GOOGLE_MAPS_EMBED_URL || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.675611279366!2d-74.05688968523717!3d4.683443396618995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a3e0e1b1b1f%3A0x1b8e5b0b0b0b0b0b0!2sCalle%20107%20%238b-30%2C%20Bogot%C3%A1%2C%20Colombia!5e0!3m2!1sen!2sco!4v1620000000000!5m2!1sen!2sco";
+  const mapEmbedUrl = import.meta.env.REACT_APP_GOOGLE_MAPS_EMBED_URL || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.675611279366!2d-74.05688968523717!3d4.683443396618995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a3e0e1b1b1f%3A0x1b8e5b0b0b0b0b0b0!2sCalle%20107%20%238b-30%2C%20Bogot%C3%A1%2C%20Colombia!5e0!3m2!1sen!2sco!4v1620000000000!5m2!1sen!2sco";
 
   return (
     <footer className={styles.footer}>
@@ -50,7 +50,7 @@ const Footer = () => {
               ></iframe>
               <p className={styles.mapCaption}>
                 <FaMapMarkerAlt className={styles.mapIcon} />
-                {process.env.REACT_APP_BUSINESS_ADDRESS || "Calle 107 #8b-30, Bogotá, Colombia"}
+                {import.meta.env.REACT_APP_BUSINESS_ADDRESS || "Calle 107 #8b-30, Bogotá, Colombia"}
               </p>
             </div>
           </div>
@@ -60,11 +60,11 @@ const Footer = () => {
             <ul className={styles.contactList}>
               <li className={styles.contactItem}>
                 <FaPhone className={styles.contactIcon} />
-                <a href={`tel:${process.env.REACT_APP_BUSINESS_PHONE || "+1234567890"}`}>{process.env.REACT_APP_BUSINESS_PHONE_DISPLAY || "+1 (234) 567-890"}</a>
+                <a href={`tel:${import.meta.env.REACT_APP_BUSINESS_PHONE || "+1234567890"}`}>{import.meta.env.REACT_APP_BUSINESS_PHONE_DISPLAY || "+1 (234) 567-890"}</a>
               </li>
               <li className={styles.contactItem}>
                 <FaEnvelope className={styles.contactIcon} />
-                <a href={`mailto:${process.env.REACT_APP_BUSINESS_EMAIL || "info@panrock.com"}`}>{process.env.REACT_APP_BUSINESS_EMAIL || "info@panrock.com"}</a>
+                <a href={`mailto:${import.meta.env.REACT_APP_BUSINESS_EMAIL || "info@panrock.com"}`}>{import.meta.env.REACT_APP_BUSINESS_EMAIL || "info@panrock.com"}</a>
               </li>
               <li className={styles.contactItem}>
                 <FaClock className={styles.contactIcon} />
