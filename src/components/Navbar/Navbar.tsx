@@ -39,9 +39,32 @@ const Navbar = () => {
     // Navegar después de que la animación de cierre haya terminado
     setTimeout(() => {
       if (href) {
-        window.location.href = href;
+        // Validar que la URL sea segura antes de redirigir
+        if (isValidUrl(href)) {
+          window.location.href = href;
+        }
       }
     }, 300);
+  };
+
+  // Función para validar URLs seguras
+  const isValidUrl = (url: string): boolean => {
+    try {
+      // Si es una ruta relativa (comienza con /), es segura
+      if (url.startsWith('/')) {
+        return true;
+      }
+      
+      // Si es una ruta absoluta, verificar que sea del mismo dominio
+      const currentUrl = new URL(window.location.href);
+      const destinationUrl = new URL(url, currentUrl.origin);
+      
+      // Permitir solo rutas del mismo origen
+      return destinationUrl.origin === currentUrl.origin;
+    } catch (error) {
+      // Si no se puede parsear como URL, no es válida
+      return false;
+    }
   };
   
   // Efecto para manejar el menú en dispositivos móviles

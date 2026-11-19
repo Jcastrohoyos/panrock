@@ -7,6 +7,20 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
+## Security Features
+
+This application includes several security measures:
+
+- **Open Redirect Prevention**: All redirects are validated to prevent open redirect vulnerabilities
+- **Secure Configuration**: Sensitive information is stored in environment variables, not hardcoded in source code
+- **Input Validation**: Form inputs are properly validated using react-hook-form
+- **Dependency Security**: Regular security audits using `npm audit`
+
+To run security checks, use:
+```bash
+npm run security-check
+```
+
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:

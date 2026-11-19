@@ -47,10 +47,10 @@ const Contact = () => {
     setSubmitStatus(null);
 
     try {
-      // Replace with your EmailJS service ID, template ID, and public key
+      // Using environment variables for EmailJS configuration
       const result = await emailjs.send(
-        'service_id', // Replace with your service ID
-        'template_id', // Replace with your template ID
+        import.meta.env.REACT_APP_EMAILJS_SERVICE_ID || '', 
+        import.meta.env.REACT_APP_EMAILJS_TEMPLATE_ID || '', 
         {
           from_name: data.name,
           from_email: data.email,
@@ -59,7 +59,7 @@ const Contact = () => {
           message: data.message,
           'g-recaptcha-response': data.captcha
         },
-        'your_public_key' // Replace with your public key
+        import.meta.env.REACT_APP_EMAILJS_PUBLIC_KEY || '' 
       );
 
       if (result.status === 200) {
@@ -164,7 +164,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3>Dirección</h3>
-                    <p>Av. Principal #1234, Colonia Centro<br />Ciudad de México, 06000</p>
+                    <p>Calle 107 #8b-30, Bogotá, Colombia</p>
                   </div>
                 </div>
                 
@@ -175,8 +175,7 @@ const Contact = () => {
                   <div>
                     <h3>Teléfono</h3>
                     <p>
-                      <a href="tel:+525512345678">+52 55 1234 5678</a><br />
-                      <a href="tel:+5255987654321">+52 55 9876 5432</a>
+                      <a href="tel:+1234567890">+1 (234) 567-890</a>
                     </p>
                   </div>
                 </div>
@@ -188,8 +187,7 @@ const Contact = () => {
                   <div>
                     <h3>Correo Electrónico</h3>
                     <p>
-                      <a href="mailto:info@panycarneahumada.com">info@panycarneahumada.com</a><br />
-                      <a href="mailto:reservaciones@panycarneahumada.com">reservaciones@panycarneahumada.com</a>
+                      <a href="mailto:info@panrock.com">info@panrock.com</a>
                     </p>
                   </div>
                 </div>
@@ -201,8 +199,8 @@ const Contact = () => {
                   <div>
                     <h3>Horario de Atención</h3>
                     <p>
-                      Lunes a Viernes: 8:00 AM - 10:00 PM<br />
-                      Sábado y Domingo: 9:00 AM - 11:00 PM
+                      Lun-Sáb: 11:00 AM - 10:00 PM<br />
+                      Dom: 12:00 PM - 8:00 PM
                     </p>
                   </div>
                 </div>
@@ -211,13 +209,13 @@ const Contact = () => {
               <div className={styles.socialSection}>
                 <h3>Síguenos en Redes Sociales</h3>
                 <div className={styles.socialLinks}>
-                  <a href="#" className={styles.socialLink} aria-label="Facebook">
+                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="Facebook">
                     <FaFacebookF />
                   </a>
-                  <a href="#" className={styles.socialLink} aria-label="Instagram">
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="Instagram">
                     <FaInstagram />
                   </a>
-                  <a href="#" className={styles.socialLink} aria-label="Twitter">
+                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="Twitter">
                     <FaTwitter />
                   </a>
                   <a href="#" className={styles.socialLink} aria-label="LinkedIn">
@@ -318,7 +316,7 @@ const Contact = () => {
                 <div className={styles.formGroup}>
                   <ReCAPTCHA
                     ref={recaptchaRef}
-                    sitekey="YOUR_RECAPTCHA_SITE_KEY" // Replace with your reCAPTCHA site key
+                    sitekey={import.meta.env.REACT_APP_RECAPTCHA_SITE_KEY || "YOUR_RECAPTCHA_SITE_KEY"} // Using environment variable for reCAPTCHA site key
                     onChange={onRecaptchaChange}
                   />
                   {!isVerified && submitStatus && !submitStatus.success && (
@@ -359,7 +357,7 @@ const Contact = () => {
             
             <div className={styles.map}>
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.123456789012!2d-74.12345678901234!3d4.123456789012345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e123456789abc%3A0x1234567890abcdef!2sCalle%20107%20%238b-30%2C%20Bogotá%2C%20Colombia!5e0!3m2!1ses!2sco!4v1623456789012!5m2!1ses!2sco" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.675611279366!2d-74.05688968523717!3d4.683443396618995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a3e0e1b1b1f%3A0x1b8e5b0b0b0b0b0b0!2sCalle%20107%20%238b-30%2C%20Bogot%C3%A1%2C%20Colombia!5e0!3m2!1sen!2sco!4v1620000000000!5m2!1sen!2sco" 
                 width="100%" 
                 height="450" 
                 style={{ border: 0 }} 
@@ -378,7 +376,7 @@ const Contact = () => {
           <h2>¿Tienes alguna pregunta?</h2>
           <p>No dudes en contactarnos, nuestro equipo está listo para ayudarte.</p>
           <div className={styles.ctaButtons}>
-            <a href="tel:+525512345678" className={styles.ctaButton}>
+            <a href="tel:+1234567890" className={styles.ctaButton}>
               <FaPhone className={styles.buttonIcon} />
               Llamar Ahora
             </a>
